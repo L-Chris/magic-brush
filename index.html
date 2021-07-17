@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <img id="image" alt="" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      html, body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+      }
+    </style>
+    <script type="module">
+      import { draw } from './dist/magic-brush.esm.js';
+      draw({
+        width: 480,
+        height: 480,
+        data: [
+          {
+            type: 'image',
+            url:
+              'https://imgessl.kugou.com/kugouicon/165/20200521/20200521205621116986.jpg',
+            x: 0,
+            y: 0,
+            shape: {
+              type: 'circle',
+              r: 50
+            }
+          },
+          {
+            type: 'text',
+            content: '狗狗',
+            x: 0,
+            y: 100
+          },
+        ],
+      }).then(res => {
+        document.getElementById('image').src = res.toDataURL();
+      });
+    </script>
+  </body>
+</html>
