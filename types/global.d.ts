@@ -16,29 +16,36 @@ interface CircleShape {
 
 type Shape = RectShape | CircleShape
 
-interface BaseElementOption {
+interface BaseElement {
   type: string;
   x: number;
   y: number;
-  shape?: Shape
+  width?: number;
+  height?: number;
 }
 
-interface TextElementOption extends BaseElementOption {
+interface TextElement extends BaseElement {
   type: 'text';
-  content: string;
+  data: string;
   fontSize?: number;
   fontFamily?: string;
+  textAlign?: CanvasTextAlign;
+  textBaseline?: CanvasTextBaseline;
   color?: string;
 }
 
-interface ImageElementOption extends BaseElementOption {
+interface ImageElement extends BaseElement {
   type: 'image';
-  url: string;
+  data: string;
+  shape?: Shape
 }
 
-interface QrcodeElementOption extends BaseElementOption {
+interface QrcodeElement extends BaseElement {
   type: 'qrcode';
-  url: string;
+  data: string;
+  shape?: Shape
 }
 
-type ElementOption = TextElementOption | ImageElementOption | QrcodeElementOption
+type ElementOption = TextElement | ImageElement | QrcodeElement | Shape
+
+interface MagicBrushPlugin {}

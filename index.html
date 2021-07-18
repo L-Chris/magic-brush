@@ -32,15 +32,23 @@
             x: 0,
             y: 0,
             shape: {
-              type: 'circle',
-              r: 50
+              type: 'rect',
+              x: 0,
+              y: 0,
+              width: 100,
+              height: 100,
+              r: 8
             }
           },
           {
             type: 'text',
             content: '狗狗',
             x: 0,
-            y: 100
+            y: 50,
+            width: 120,
+            height: 40,
+            backgroundColor: '#000',
+            textAlign: 'center'
           },
         ],
       }).then(res => {

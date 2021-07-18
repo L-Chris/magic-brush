@@ -7,25 +7,39 @@ interface DrawOptions {
   data: ElementOption[];
 }
 
-const createTask = (context: CanvasRenderingContext2D, option: ElementOption): Promise<CanvasRenderingContext2D> => {
+const createTask = (ctx: CanvasRenderingContext2D, option: ElementOption): Promise<CanvasRenderingContext2D> => {
   return new Promise(resolve => {
     if (option.type === 'text') {
+      const textAlign = option.textAlign || 'start'
+      const textBaseline = option.textBaseline || 'alphabetic'
       const fontSize = option.fontSize || 12
       const fontFamily = option.fontFamily || 'serif'
       const color = option.color || '#000'
 
-      context.font = `${fontSize}px ${fontFamily}`
-      context.fillStyle = color
-      context.fillText(option.content, option.x, option.y)
+      ctx.font = `${fontSize}px ${fontFamily}`
+      ctx.textAlign = textAlign
+      ctx.textBaseline = textBaseline
+      ctx.fillStyle = color
+      ctx.fillText(option.data, option.x, option.y,)
+      ctx.textAlign
 
-      return resolve(context)
+      return resolve(ctx)
     }
     if (option.type === 'image') {
-      fetchImage(option.url).then(img => {
-        option.shape && createPath(context, option.shape)
-        context.drawImage(img, option.x, option.y)
-        resolve(context)
+      fetchImage(option.data).then(img => {
+        option.shape && createPath(ctx, option.shape)
+        ctx.drawImage(img, option.x, option.y)
+        resolve(ctx)
       })
+      return
+    }
+    if (option.type === 'circle') {
+      createPath(ctx, option)
+      return resolve(ctx)
+    }
+    if (option.type === 'rect') {
+      createPath(ctx, option)
+      return resolve(ctx)
     }
   })
 }
@@ -61,6 +75,10 @@ const draw = (options: DrawOptions) => {
   }))
 }
 
+const use = (plugin: MagicBrushPlugin) => {
+}
+
 export {
-  draw
+  draw,
+  use
 }
